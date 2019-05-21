@@ -1,0 +1,20 @@
+{
+  "name": "AssetTracker",
+  "version": "1.0.0",
+  "description": "A web app designed to track the location and assignment of multiple devices using the Google Distance Matrix API",
+  "main": "index.js",
+  "repository": "git@github.com:jordan-hamilton/290-Final-Project.git",
+  "author": "Jordan Hamilton <jordan-hamilton@users.noreply.github.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.17.0"
+  },
+  "engines": {
+    "node": "12.2.0",
+    "yarn": "1.16.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  }
+}
