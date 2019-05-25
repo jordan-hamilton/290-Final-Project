@@ -1,40 +1,28 @@
+function createLink(page) {
+  var link = document.createElement('a');
+
+  if (page == 'home') {
+    link.setAttribute('href', '/');
+  } else {
+    link.setAttribute('href', `/${page}`);
+  }
+
+  var linkImg = document.createElement('img');
+  linkImg.setAttribute('src', `./icons/${page}.svg`);
+  link.appendChild(linkImg);
+
+  return link;
+}
+
 function navBar() {
 
   var header = document.createElement('header');
   header.setAttribute('id', 'nav');
 
-  var nav = [];
-  var home = document.createElement('a');
-  home.setAttribute('href', '/');
-  var homeImg = document.createElement('img');
-  homeImg.setAttribute('src', './icons/home.svg');
-  home.appendChild(homeImg);
-  nav.push(home);
-
-  var locate = document.createElement('a');
-  locate.setAttribute('href', '/locate');
-  var locateImg = document.createElement('img');
-  locateImg.setAttribute('src', './icons/locate.svg');
-  locate.appendChild(locateImg);
-  nav.push(locate);
-
-  var list = document.createElement('a');
-  list.setAttribute('href', '/list');
-  var listImg = document.createElement('img');
-  listImg.setAttribute('src', './icons/list.svg');
-  list.appendChild(listImg);
-  nav.push(list);
-
-  var add = document.createElement('a');
-  add.setAttribute('href', '/add');
-  var addImg = document.createElement('img');
-  addImg.setAttribute('src', './icons/add.svg');
-  add.appendChild(addImg);
-  nav.push(add);
-
-  for (var i = 0; i < nav.length; i++) {
-    header.appendChild(nav[i]);
-  }
+  header.appendChild(createLink('home'));
+  header.appendChild(createLink('locate'));
+  header.appendChild(createLink('list'));
+  header.appendChild(createLink('add'));
 
   document.getElementById('app').insertAdjacentElement('beforebegin', header);
 
