@@ -1,7 +1,7 @@
 function navBar() {
 
-  var footer = document.createElement('footer');
-  footer.setAttribute('id', 'nav');
+  var header = document.createElement('header');
+  header.setAttribute('id', 'nav');
 
   var nav = [];
   var home = document.createElement('a');
@@ -33,10 +33,10 @@ function navBar() {
   nav.push(add);
 
   for (var i = 0; i < nav.length; i++) {
-    footer.appendChild(nav[i]);
+    header.appendChild(nav[i]);
   }
 
-  document.getElementById('app').insertAdjacentElement('afterend', footer);
+  document.getElementById('app').insertAdjacentElement('beforebegin', header);
 
 }
 
