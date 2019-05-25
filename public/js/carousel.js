@@ -65,7 +65,7 @@ function carousel() {
       item.setAttribute('class', item.getAttribute('class') + ' active');
     }
     var itemImg = document.createElement('img');
-    itemImg.setAttribute('src', `carousel/${i}.jpg`);
+    itemImg.setAttribute('src', `images/${i}.jpg`);
     itemImg.setAttribute('class', 'd-block w-100');
     item.appendChild(itemImg);
 
