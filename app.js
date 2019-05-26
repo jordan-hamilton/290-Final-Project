@@ -3,7 +3,8 @@ var express = require('express');
 var path = require('path');
 var Sequelize = require('sequelize');
 
-var dbConnection = require('./dbCon.js'); //Not required on Heroku since we're using environment vars
+//Not required on Heroku since we're using environment variables
+var dbConnection = require('./dbCon.js');
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
@@ -53,16 +54,18 @@ sequelize
   .authenticate()
   .then(() => {
     console.log('Connection has been established successfully.');
-      sequelize.sync({ force: true });
+    sequelize.sync({
+      force: true
+    });
   })
   .catch(err => {
     console.error('Unable to connect to the database:', err);
   });
 
-  technician.create({
-    //Create a dummy db object
-    name: 'John'
-  });
+technician.create({
+  // Create a dummy technician in the database
+  name: 'John'
+});
 
 
 app.get('/', function(req, res) {
@@ -71,13 +74,17 @@ app.get('/', function(req, res) {
 
 app.get('/test', function(req, res) {
   technician.findAll().then(technicians => {
-  console.log("All users:", JSON.stringify(technicians, null, 4));
-  res.sendFile(path.join(__dirname, 'pages', 'list.html'));
-});
+    console.log("All users:", JSON.stringify(technicians, null, 4));
+    res.sendFile(path.join(__dirname, 'pages', 'list.html'));
+  });
 });
 
 app.get('/locate', function(req, res) {
   res.sendFile(path.join(__dirname, 'pages', 'locate.html'));
+});
+
+app.get('/list', function(req, res) {
+  res.sendFile(path.join(__dirname, 'pages', 'list.html'));
 });
 
 app.get('/add', function(req, res) {
