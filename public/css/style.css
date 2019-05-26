@@ -1,4 +1,5 @@
 html, body {
+  background-color: #00447c;
   margin: 0;
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -8,7 +9,12 @@ html, body {
 /*Main content styling*/
 #app {
   padding-top: 50px;
+}
+
+#introCarousel {
   max-height: calc(100vh - 50px);
+  max-width: calc(100vw);
+  overflow: hidden;
 }
 
 /*Nav bar styling*/
