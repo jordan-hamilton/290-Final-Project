@@ -50,6 +50,11 @@ var technician = sequelize.define('technicians', {
   }
 }, {});
 
+device.belongsTo(technician);
+device.hasOne(building);
+technician.hasMany(device);
+
+
 sequelize
   .authenticate()
   .then(() => {
@@ -67,6 +72,14 @@ technician.create({
   name: 'John'
 });
 
+building.create({
+  name: 'Admin Building',
+  address: '1201 5th St'
+});
+
+var newDevice = device.create({
+  name: 'MS17435'
+});
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
