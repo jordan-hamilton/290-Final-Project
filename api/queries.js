@@ -10,7 +10,7 @@ var pool = new Pool({
 })
 
 var getBuildings = function(request, response) {
-  pool.query('SELECT * FROM buildings ORDER BY id ASC', function(error, result) {
+  pool.query('SELECT * FROM buildings ORDER BY name ASC', function(error, result) {
     if (error) {
       console.error(error.stack);
     } else {
