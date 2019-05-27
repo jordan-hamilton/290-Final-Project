@@ -7,7 +7,7 @@ var path = require('path');
 var request = require('request');
 
 var host = 'http://localhost:3000';
-if (process.env.port) {
+if (process.env.PORT) {
   host = 'https://assettracker.jordanhamilton.me';
 }
 
