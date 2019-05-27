@@ -1,5 +1,8 @@
-const conn = require('../dbCon.js')
-const Pool = require('pg').Pool;
+var Pool = require('pg').Pool;
+
+if (!process.env.DATABASE_URL) {
+  var conn = require('../dbCon.js')
+}
 
 var pool = new Pool({
   connectionString: process.env.DATABASE_URL || conn.DATABASE_URL,
