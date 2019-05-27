@@ -44,9 +44,9 @@ app.get('/add', function(req, res) {
 app.get('/test', function(req, res) {
   request('http://localhost:3000/api/buildings', function(error, response, body) {
     if (!error && response.statusCode < 400) {
-      console.log(body);//DEBUG
-      console.log(response.statusCode);//DEBUG
-      console.log(response);//DEBUG
+      console.log(body); //DEBUG
+      console.log(response.statusCode); //DEBUG
+      console.log(response); //DEBUG
       res.render('test', parseJson(body));
     } else {
       if (response) {
@@ -65,6 +65,18 @@ app.get('/api/devices/:id', api.getDeviceById);
 app.get('/api/technicians', api.getTechnicians);
 app.get('/api/technicians/:id', api.getTechnicianById);
 
+app.use(function (req, res) {
+  res.status(404);
+  res.render('404');
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.type('plain/text');
+  res.status(500);
+  res.render('500');
+});
+
 app.listen(app.get('port'), function() {
   console.log('Server started on http://localhost:' + app.get('port') + '.');
 });
@@ -74,9 +86,9 @@ function parseJson(body) {
   context.data = [];
   var content = JSON.parse(body)
   for (var item in content) {
-    console.log('Name: ', content[item].name);//DEBUG
-    console.log('ID: ', content[item].id);//DEBUG
-    console.log('Address: ', content[item].address);//DEBUG
+    console.log('Name: ', content[item].name); //DEBUG
+    console.log('ID: ', content[item].id); //DEBUG
+    console.log('Address: ', content[item].address); //DEBUG
     context.data.push({
       'name': content[item].name,
       'value': content[item].id,

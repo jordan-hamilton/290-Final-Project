@@ -14,7 +14,8 @@ var getBuildings = function(request, response) {
     if (error) {
       console.error(error.stack);
     } else {
-      response.status(200).json(result.rows);
+      response.status(200);
+      response.json(result.rows);
     }
   });
 }
@@ -25,8 +26,8 @@ var getBuildingById = function(request, response) {
     if (error) {
       console.error(error.stack);
     } else {
-      console.log(result);
-      response.status(200).json(result.rows);
+      response.status(200);
+      response.json(result.rows);
     }
   });
 }
@@ -36,7 +37,8 @@ var getDevices = function(request, response) {
     if (error) {
       console.error(error.stack);
     } else {
-      response.status(200).json(result.rows);
+      response.status(200);
+      response.json(result.rows);
     }
   });
 }
@@ -47,8 +49,8 @@ var getDeviceById = function(request, response) {
     if (error) {
       console.error(error.stack);
     } else {
-      console.log(result);
-      response.status(200).json(result.rows);
+      response.status(200);
+      response.json(result.rows);
     }
   });
 }
@@ -58,7 +60,8 @@ var getTechnicians = function(request, response) {
     if (error) {
       console.error(error.stack);
     } else {
-      response.status(200).json(result.rows);
+      response.status(200);
+      response.json(result.rows);
     }
   });
 }
@@ -69,8 +72,8 @@ var getTechnicianById = function(request, response) {
     if (error) {
       console.error(error.stack);
     } else {
-      console.log(result);
-      response.status(200).json(result.rows);
+      response.status(200);
+      response.json(result.rows);
     }
   });
 }
