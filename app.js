@@ -41,7 +41,7 @@ app.get('/add', function(req, res) {
   res.sendFile(path.join(__dirname, 'pages', 'add.html'));
 });
 
-app.get('/test', function(req, res) {
+app.get('/test', function(req, res, next) {
   request('http://localhost:3000/api/buildings', function(error, response, body) {
     if (!error && response.statusCode < 400) {
       console.log(body); //DEBUG
