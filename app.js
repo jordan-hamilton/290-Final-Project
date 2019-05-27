@@ -52,7 +52,8 @@ app.get('/test', function(req, res, next) {
       if (response) {
         console.log(response.statusCode);
       }
-      next(err);
+      console.error(error.stack);
+      next(error);
     }
   });
 });
