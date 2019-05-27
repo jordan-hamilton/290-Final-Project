@@ -75,7 +75,7 @@ function parseJson(body) {
   var content = JSON.parse(body)
   for (var item in content) {
     context.data.push({
-      'name': content[item].name
+      'name': content[item].name,
       'value': content[item].id
     });
   }
