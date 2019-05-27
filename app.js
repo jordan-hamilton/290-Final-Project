@@ -74,9 +74,13 @@ function parseJson(body) {
   context.data = [];
   var content = JSON.parse(body)
   for (var item in content) {
+    console.log('Name: ', content[item].name);//DEBUG
+    console.log('ID: ', content[item].id);//DEBUG
+    console.log('Address: ', content[item].address);//DEBUG
     context.data.push({
       'name': content[item].name,
-      'value': content[item].id
+      'value': content[item].id,
+      'address': content[item].address
     });
   }
   return context;
