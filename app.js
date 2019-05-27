@@ -6,6 +6,11 @@ var handlebars = require('express-handlebars').create({
 var path = require('path');
 var request = require('request');
 
+var host = 'http://localhost:3000';
+if (process.env.port) {
+  host = 'https://assettracker.jordanhamilton.me';
+}
+
 var api = require('./api/queries.js');
 
 // Configure Express
@@ -42,7 +47,7 @@ app.get('/add', function(req, res) {
 });
 
 app.get('/test', function(req, res, next) {
-  request('http://localhost:3000/api/buildings', function(error, response, body) {
+  request(`${host}/api/buildings`, function(error, response, body) {
     if (!error && response.statusCode < 400) {
       console.log(body); //DEBUG
       console.log(response.statusCode); //DEBUG
