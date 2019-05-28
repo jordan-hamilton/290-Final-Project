@@ -1,13 +1,15 @@
 html, body {
   margin: 0;
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  width: 100vw;
+  font-family: Avenir Next, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 20px;
 }
 
 /*Main content styling*/
 #app {
   padding-top: 50px;
+  text-align: center;
 }
 
 #introCarousel {
@@ -23,7 +25,7 @@ html, body {
   padding: 10px 10px;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100vw;
   z-index: 1000;
 }
 
@@ -32,4 +34,29 @@ html, body {
   height: 20px;
   color: white;
   padding: 0px 10px;
+}
+
+#deviceList {
+  height:250px;
+  width:100%;
+  overflow-y: auto;
+  background-color: #717073;
+  color: #fff;
+  padding: 10px 0px;
+  text-align: left;
+}
+
+form {
+  text-align: left;
+  padding: 20px 20px
+}
+
+h1 {
+  background-color: #d11242;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+}
+h6 {
+  color: darkgray;
 }
