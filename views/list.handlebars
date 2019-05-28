@@ -1,8 +1,11 @@
+<p>View a map of campus <a href="/images/map.jpg" target="_blank">here</a>.</p>
 {{#if data}}
   <ul>
     {{#each data}}
       <li>{{this.name}}
     {{/each}}
   </ul>
+{{else}}
+  <p>There are currently no devices to display.</p>
 {{/if}}
 <script type="module" src="./js/list.js"></script>
