@@ -80,23 +80,27 @@ app.post('/add', function(req, res, next) {
       res.send('Error: Could not create this device');
       console.error('Not enough information was provided to create this device.');
       return;
+    } else {
+      handleAdd();
     }
   }
 
-  function handleAdd() {}
+  function handleAdd() {
+    
+  }
 });
 
 
 
 //Set GET requests for API queries
 app.get('/api/buildings', api.getBuildings);
-app.get('/api/buildings/:id', api.getBuildingById);
+app.get('/api/buildings/id/:id', api.getBuildingById);
 app.get('/api/devices', api.getDevices);
-app.get('/api/devices/:id', api.getDeviceById);
+app.get('/api/devices/id/:id', api.getDeviceById);
 app.post('/api/devices', api.createDevice);
 app.get('/api/technicians', api.getTechnicians);
 app.post('/api/technicians', api.createTechnician);
-app.get('/api/technicians/:id', api.getTechnicianById);
+app.get('/api/technicians/id/:id', api.getTechnicianById);
 app.get('/api/technicians/name/:techName', api.getTechnicianByName);
 
 app.use(function(req, res) {
