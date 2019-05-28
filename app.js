@@ -77,8 +77,8 @@ app.post('/add', function(req, res, next) {
   for (var property in req.body) {
     if (req.body[property] == '') {
       res.status(422);
-      res.send('Error: Could not create this device');
-      console.error('Not enough information was provided to create this device.');
+      res.send('Not enough information was provided to create this device.');
+      console.error('Error: Could not create this device');
       return;
     }
   }
