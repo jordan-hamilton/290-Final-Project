@@ -1,5 +1,4 @@
 html, body {
-  background-color: #00447c;
   margin: 0;
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -33,8 +32,4 @@ html, body {
   height: 20px;
   color: white;
   padding: 0px 10px;
-}
-
-li, form {
-  color: white;
 }
