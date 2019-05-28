@@ -57,6 +57,12 @@ h1 {
   padding: 0;
   margin: 0;
 }
+
 h6 {
   color: darkgray;
+}
+
+.error {
+  font-size: 190px;
+  color: #d11242
 }
