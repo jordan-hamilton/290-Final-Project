@@ -1,3 +1,8 @@
+// Create a header element and navigation icons to include on every page using
+// JavaScript to manipulate the DOM.
+// All navigation icons are under the MIT license and provided by the Ionic Framework team
+// (https://ionicons.com/)
+
 function createLink(page) {
   var link = document.createElement('a');
 
