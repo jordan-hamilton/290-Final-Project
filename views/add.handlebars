@@ -1,0 +1,32 @@
+<form action="" method="post">
+  <label>Device Name:
+    <input type="text" id="devName" name="devName" placeholder="MS190000">
+  </label>
+  <br />
+  <label>Device Type:
+    <input type="text" id="devType" name="devType" placeholder="MacBook Pro">
+  </label>
+  <br />
+  <label>Technician Name:
+    <input type="text" id="techName" name="techName" placeholder="John Appleseed">
+  </label>
+  <br />
+  <label>Current Device Location:
+    <select id="devLoc" name="devLoc">
+      {{#each data}}
+      <option value="{{this.id}}">{{this.name}}</option>
+      {{/each}}
+    </select>
+  </label>
+  <br />
+  <label>Device Destination:
+    <select id="devDest" name="devDest">
+      {{#each data}}
+      <option value="{{this.id}}">{{this.name}}</option>
+      {{/each}}
+    </select>
+  </label>
+  <br />
+  <input type="submit" value="Add Device" id="devSubmit">
+</form>
+<script type="module" src="./js/add.js"></script>
