@@ -14,7 +14,7 @@ function createLink(page) {
   return link;
 }
 
-function navBar() {
+function createNavBar() {
 
   var header = document.createElement('header');
   header.setAttribute('id', 'nav');
@@ -24,8 +24,7 @@ function navBar() {
   header.appendChild(createLink('list'));
   header.appendChild(createLink('add'));
 
-  document.getElementById('app').insertAdjacentElement('beforebegin', header);
-
+  return header;
 }
 
-export default navBar;
+export default createNavBar;

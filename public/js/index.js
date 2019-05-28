@@ -1,8 +1,11 @@
-import navBar from './navBar.js';
-import carousel from './carousel.js';
+import NavBar from './navBar.js';
+import Carousel from './carousel.js';
 
-var nav = navBar();
-var intro = carousel();
+var nav = NavBar;
+var carousel = Carousel;
+
+document.getElementById('app').insertAdjacentElement('beforebegin', nav());
+document.getElementById('app').appendChild(carousel());
 
 document.addEventListener('DOMContentLoaded', function(event) {
 
