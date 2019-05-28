@@ -1,8 +1,20 @@
+<h1>Device List</h1>
 {{#if data}}
-  <ul>
-    {{#each data}}
-      <li>{{this.name}}
-    {{/each}}
-  </ul>
+  <div id="deviceList">
+    <ul>
+      {{#each data}}
+        <li>{{this.name}}
+          <ul>
+            <li>Assigned Technician:
+            <li>Current Location:
+            <li>Destination:
+          </ul>
+      {{/each}}
+    </ul>
+  </div>
+{{else}}
+  <p>There are currently no devices to display.</p>
 {{/if}}
+<p>Download a map of campus for your reference <a href="/images/map.jpg" download="Campus Map">here</a>.</p>
+<p>You can estimate the time required to arrive at each device's destination using the <a href="/locate">Locator</a>.
 <script type="module" src="./js/list.js"></script>

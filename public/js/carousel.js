@@ -1,3 +1,6 @@
+// Generate a Bootstrap carousel using JavaScript to create elements.
+// All images are copyright MSU Denver (msudenver.edu).
+
 function createButton(direction) {
   var button = document.createElement('a');
   button.setAttribute('class', `carousel-control-${direction}`);
