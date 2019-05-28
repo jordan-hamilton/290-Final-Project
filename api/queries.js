@@ -60,19 +60,19 @@ var getDeviceById = function(request, response) {
 }
 
 var createDevice = function(request, response) {
-  var name = request.params.devName;
-  var type = request.params.devType;
-  var techId = request.params.devType;
-  var devLoc = request.params.devLoc;
-  var devDest = request.params.devDest;
+  var name = request.body.devName;
+  var type = request.body.devType;
+  var techId = parseInt(request.body.techId);
+  var devLoc = parseInt(request.body.devLoc);
+  var devDest = parseInt(request.body.devDest);
   var time = new Date();
-  pool.query('INSERT INTO technicians (name, type, createdAt, updatedAt, technicianId, buildingid, destinationid) VALUES ($1, $2, $3, $3, $4, $5, $6)', [name, type, time, techId, devLoc, devDest], function(error, result) {
+  pool.query('INSERT INTO devices (name, type, "createdAt", "updatedAt", "technicianId", "buildingId", "destinationId") VALUES ($1, $2, $3, $3, $4, $5, $6)', [name, type, time, techId, devLoc, devDest], function(error, result) {
     if (error) {
       response.status(400);
       console.error(error.stack);
     } else {
       response.status(201);
-      response.send(`Device ${result.insertId} added to the devices table.`);
+      response.send(`Device added to the devices table.`);
     }
   });
 }
@@ -116,15 +116,15 @@ var getTechnicianByName = function(request, response) {
 }
 
 var createTechnician = function(request, response) {
-  var name = request.params.techName;
+  var techName = request.body.techName;
   var time = new Date();
-  pool.query('INSERT INTO technicians (name, createdAt, updatedAt) VALUES ($1, $2, $2)', [name, time, time], function(error, result) {
+  pool.query('INSERT INTO technicians (name, "updatedAt", "createdAt") VALUES ($1, $2, $2)', [techName, time], function(error, result) {
     if (error) {
       response.status(400);
       console.error(error.stack);
     } else {
       response.status(201);
-      response.send(`Technician ${result.insertId} added to the technicians table.`);
+      response.send(`Technician added to the technicians table.`);
     }
   });
 }

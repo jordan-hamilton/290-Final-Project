@@ -34,3 +34,7 @@ html, body {
   color: white;
   padding: 0px 10px;
 }
+
+li, form {
+  color: white;
+}

@@ -17,10 +17,9 @@ document.getElementById('devSubmit').addEventListener('click', function(event) {
   request.setRequestHeader('Content-Type', 'application/json');
   request.addEventListener('load', function() {
     if (request.status >= 200 && request.status < 400) {
-      var response = JSON.parse(request.responseText);
-      console.log(response);
+      console.log(request.responseText);
     } else {
-      console.log(`An error occurred: ${request.statusText}`)
+      console.error(`An error occurred: ${request.statusText}`)
     }
   });
   request.send(JSON.stringify(payload));
