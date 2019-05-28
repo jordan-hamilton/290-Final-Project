@@ -22,7 +22,7 @@ function createButton(direction) {
   return button;
 }
 
-function carousel() {
+function createCarousel() {
   var carouselContainer = document.createElement('div');
 
   var carousel = document.createElement('div');
@@ -78,8 +78,8 @@ function carousel() {
   carousel.appendChild(createButton('next'));
 
   carouselContainer.appendChild(carousel);
-  document.getElementById('app').appendChild(carouselContainer);
 
+  return carouselContainer;
 }
 
-export default carousel;
+export default createCarousel;
