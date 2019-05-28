@@ -35,7 +35,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/locate', function(req, res) {
-  res.sendFile(path.join(__dirname, 'pages', 'locate.html'));
+  res.render('locate');
 });
 
 app.get('/list', function(req, res, next) {
