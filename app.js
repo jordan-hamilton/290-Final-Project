@@ -80,19 +80,80 @@ app.post('/add', function(req, res, next) {
       res.send('Error: Could not create this device');
       console.error('Not enough information was provided to create this device.');
       return;
-    } else {
-      handleAdd();
     }
   }
 
-  function handleAdd() {
-    
+  //Check if the entered technician exists in the database
+  request(`${host}/api/technicians/name/${req.body.techName}`, handleTechnician);
+
+  function handleTechnician(error, response, body) {
+    if (!error && response.statusCode < 400) {
+      var results = JSON.parse(body);
+      if (results === undefined || results.length == 0) {
+        console.log(`Creating technician with name ${req.body.techName}`);
+        var postTechBody = `{"techName": "${req.body.techName}"}`
+        request({
+          "url": `${host}/api/technicians`,
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": postTechBody
+        }, handleTechnicianAdd);
+      } else {
+        // Parse the technician's ID if we had a result from our GET request
+        var techId = results[0].id;
+        // Form the body of a POST request to create the device based off of the
+        // provided information in the request body and our retrieved technician ID
+        var postDeviceBody = `{"techId": "${techId}",
+                             "devName": "${req.body.devName}",
+                             "devType": "${req.body.devType}",
+                             "devLoc": "${req.body.devLoc}",
+                             "devDest": "${req.body.devDest}"}`
+        request({
+          "url": `${host}/api/devices`,
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": postDeviceBody
+        }, handleDeviceAdd);
+      }
+    } else {
+      if (response) {
+        console.log(response.statusCode);
+      }
+      console.error(error);
+    }
+  }
+
+  function handleTechnicianAdd(error, response, body) {
+    if (!error && response.statusCode < 400) {
+      console.log(body);
+      request(`${host}/api/technicians/name/${req.body.techName}`, handleTechnician);
+    } else {
+      if (response) {
+        console.log(response.statusCode);
+      }
+      console.error(error);
+    }
+  }
+
+  function handleDeviceAdd(error, response, body) {
+    if (!error && response.statusCode < 400) {
+      res.status(201);
+      res.send('Successfully created this device');
+      console.log(body);
+    } else {
+      if (response) {
+        console.log(response.statusCode);
+      }
+      console.error(error);
+    }
   }
 });
 
-
-
-//Set GET requests for API queries
+//Set requests for API queries
 app.get('/api/buildings', api.getBuildings);
 app.get('/api/buildings/id/:id', api.getBuildingById);
 app.get('/api/devices', api.getDevices);
@@ -103,11 +164,13 @@ app.post('/api/technicians', api.createTechnician);
 app.get('/api/technicians/id/:id', api.getTechnicianById);
 app.get('/api/technicians/name/:techName', api.getTechnicianByName);
 
+// Handle 404 errors
 app.use(function(req, res) {
   res.status(404);
   res.render('404');
 });
 
+// Handle server errors
 app.use(function(err, req, res, next) {
   console.error(err.stack);
   res.status(500);
@@ -118,7 +181,7 @@ app.listen(app.get('port'), function() {
   console.log('Server started on http://localhost:' + app.get('port') + '.');
 });
 
-function parseJson(body) {
+function parseJson(body) { //Debug: still use? or modify for list?
   var context = {};
   context.data = [];
   var content = JSON.parse(body);
