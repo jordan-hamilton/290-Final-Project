@@ -9,7 +9,6 @@ var request = require('request');
 var host = 'http://localhost:3000';
 if (process.env.PORT) {
   // Change the url to the production URL if there's a PORT environment variable
-  var conn = require('./credentials.js')
   host = 'https://assettracker.jordanhamilton.me';
 }
 
@@ -18,7 +17,8 @@ var api = require('./api/queries.js');
 // Import our Google API key if it's not stored in an environment variable
 var apiKey;
 if (!process.env.apiKey) {
-  var apiKey = conn.apiKey;
+  var conn = require('./credentials.js')
+  apiKey = conn.apiKey;
 } else {
   apiKey = process.env.apiKey;
 }
