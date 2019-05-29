@@ -1,4 +1,11 @@
 <h1>Device Locator</h1>
 <h6>Please be mindful and limit checking unneeded destination times. The Google Distance Matrix API is not free.</h6>
+{{#each data}}
+  <div class="devLoc">
+    <p id="dev{{this.id}}">{{this.name}}</p>
+    <input type="submit" action="" value="Check Location" id="{{this.id}}">
+    <br />
+  </div>
+{{/each}}
 <p>For more information on MSU Denver, <a href="https://msudenver.edu" target="_blank">visit our site</a>.
-<script type="module" src="./js/locate.js"></script>
+  <script type="module" src="./js/locate.js"></script>
