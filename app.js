@@ -9,7 +9,6 @@ var request = require('request');
 var host = 'http://localhost:3000';
 if (process.env.PORT) {
   // Change the url to the production URL if there's a PORT environment variable
-
   host = 'https://assettracker.jordanhamilton.me';
 }
 
@@ -19,7 +18,7 @@ var api = require('./api/queries.js');
 var apiKey;
 if (!process.env.apiKey) {
   var conn = require('./credentials.js')
-  var apiKey = conn.apiKey;
+  apiKey = conn.apiKey;
 } else {
   apiKey = process.env.apiKey;
 }
