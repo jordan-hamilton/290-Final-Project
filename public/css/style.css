@@ -12,13 +12,14 @@ html, body {
   text-align: center;
 }
 
+/*Homepage carousel*/
 #introCarousel {
   max-height: calc(100vh - 50px);
   max-width: calc(100vw);
   overflow: hidden;
 }
 
-/*Nav bar styling*/
+/*Navigation bar*/
 #nav {
   background-color: #00447c;
   color: white;
@@ -29,13 +30,14 @@ html, body {
   z-index: 1000;
 }
 
-/*Nav icon styling*/
+/*Navigation icons*/
 #nav>a>img {
   height: 20px;
   color: white;
   padding: 0px 10px;
 }
 
+/*Listbox*/
 #deviceList {
   height:250px;
   width:100%;
@@ -46,6 +48,7 @@ html, body {
   text-align: left;
 }
 
+/*Add device form*/
 form {
   text-align: left;
   padding: 20px 20px
@@ -62,6 +65,17 @@ h6 {
   color: darkgray;
 }
 
+ul {
+  list-style-type: square;
+}
+
+/*Device to display location*/
+.devLoc {
+  padding: 0px 10px;
+  text-align: left;
+}
+
+/*Error message*/
 .error {
   font-size: 190px;
   color: #d11242

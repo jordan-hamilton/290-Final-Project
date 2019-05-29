@@ -8,10 +8,16 @@ var request = require('request');
 
 var host = 'http://localhost:3000';
 if (process.env.PORT) {
+  // Change the url to the production URL if there's a PORT environment variable
   host = 'https://assettracker.jordanhamilton.me';
 }
 
 var api = require('./api/queries.js');
+
+// Import our Google API key if it's not stored in an environment variable
+if (!process.env.apiKey) {
+  var conn = require('./credentials.js')
+}
 
 // Configure Express
 var app = express();
@@ -34,16 +40,56 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, 'pages', 'index.html'));
 });
 
-app.get('/locate', function(req, res) {
-  res.render('locate');
+app.get('/locate', function(req, res, next) {
+  request(`${host}/api/devices`, function(error, response, body) {
+    if (!error && response.statusCode < 400) {
+      res.render('locate', parseJson(body));
+    } else {
+      if (response) {
+        console.log(response.statusCode);
+      }
+      console.error(error.stack);
+      next(error);
+    }
+  });
+});
+
+app.post('/locate', function(req, res, next) {
+  request(`${host}/api/devices/locations/id/${req.body.devId}`, handleDevice);
+
+  function handleDevice(error, response, body) {
+    if (!error && response.statusCode < 400) {
+      var results = JSON.parse(body);
+      // Format our addresses with a + wherever there is a space, following the API guidelines
+      // located here: https://developers.google.com/maps/documentation/distance-matrix/web-service-best-practices#BuildingURLs
+      var origin = results[0].devLoc.split(' ').join('+');
+      var destination = results[0].devDest.split(' ').join('+');
+      var url = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin}&destinations=${destination}&key=${conn.apiKey}`
+      request(url, handleLocation);
+    } else {
+      if (response) {
+        console.log(response.statusCode);
+      }
+      console.error(error);
+    }
+  }
+
+  function handleLocation(error, response, body) {
+    if (!error && response.statusCode < 400) {
+      res.status(200);
+      res.send(body);
+    } else {
+      if (response) {
+        console.log(response.statusCode);
+      }
+      console.error(error);
+    }
+  }
 });
 
 app.get('/list', function(req, res, next) {
   request(`${host}/api/devices`, function(error, response, body) {
     if (!error && response.statusCode < 400) {
-      console.log(body); // DEBUG
-      console.log(`Status Code: ${response.statusCode}`); // DEBUG
-      console.log(response); // DEBUG
       res.render('list', parseJson(body));
     } else {
       if (response) {
@@ -58,9 +104,6 @@ app.get('/list', function(req, res, next) {
 app.get('/add', function(req, res, next) {
   request(`${host}/api/buildings`, function(error, response, body) {
     if (!error && response.statusCode < 400) {
-      console.log(body); //DEBUG
-      console.log(`Status Code: ${response.statusCode}`); // DEBUG
-      console.log(response); //DEBUG
       res.render('add', parseJson(body));
     } else {
       if (response) {
@@ -73,7 +116,6 @@ app.get('/add', function(req, res, next) {
 });
 
 app.post('/add', function(req, res, next) {
-  console.log(req.body); // DEBUG
   for (var property in req.body) {
     if (req.body[property] == '') {
       res.status(422);
@@ -129,7 +171,6 @@ app.post('/add', function(req, res, next) {
 
   function handleTechnicianAdd(error, response, body) {
     if (!error && response.statusCode < 400) {
-      console.log(body);
       request(`${host}/api/technicians/name/${req.body.techName}`, handleTechnician);
     } else {
       if (response) {
@@ -143,7 +184,6 @@ app.post('/add', function(req, res, next) {
     if (!error && response.statusCode < 400) {
       res.status(201);
       res.send('Successfully created this device');
-      console.log(body);
     } else {
       if (response) {
         console.log(response.statusCode);
@@ -158,6 +198,7 @@ app.get('/api/buildings', api.getBuildings);
 app.get('/api/buildings/id/:id', api.getBuildingById);
 app.get('/api/devices', api.getDevices);
 app.get('/api/devices/id/:id', api.getDeviceById);
+app.get('/api/devices/locations/id/:id', api.getLocationById);
 app.post('/api/devices', api.createDevice);
 app.get('/api/technicians', api.getTechnicians);
 app.post('/api/technicians', api.createTechnician);
@@ -181,14 +222,13 @@ app.listen(app.get('port'), function() {
   console.log('Server started on http://localhost:' + app.get('port') + '.');
 });
 
-function parseJson(body) { //Debug: still use? or modify for list?
+// Adds data from a HTTP request's response to a context,
+// then returns the context for use in Handlebars
+function parseJson(body) {
   var context = {};
   context.data = [];
   var content = JSON.parse(body);
   for (var item in content) {
-    console.log('Name: ', content[item].name); //DEBUG
-    console.log('ID: ', content[item].id); //DEBUG
-    console.log('Address: ', content[item].address); //DEBUG
     context.data.push({
       'name': content[item].name,
       'id': content[item].id
