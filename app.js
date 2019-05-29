@@ -17,6 +17,7 @@ var api = require('./api/queries.js');
 // Import our Google API key if it's not stored in an environment variable
 var apiKey;
 if (!process.env.apiKey) {
+  // Use the key in our credentials file
   var conn = require('./credentials.js')
   apiKey = conn.apiKey;
 } else {
