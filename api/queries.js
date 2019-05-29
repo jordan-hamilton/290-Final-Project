@@ -1,7 +1,8 @@
 var Pool = require('pg').Pool;
 
+// Import our database connection credentials if they're not stored in an environment variable
 if (!process.env.DATABASE_URL) {
-  var conn = require('../dbCon.js')
+  var conn = require('../credentials.js')
 }
 
 var pool = new Pool({
@@ -49,6 +50,23 @@ var getDevices = function(request, response) {
 var getDeviceById = function(request, response) {
   var id = parseInt(request.params.id);
   pool.query('SELECT * FROM devices WHERE id = $1', [id], function(error, result) {
+    if (error) {
+      response.status(400);
+      console.error(error.stack);
+    } else {
+      response.status(200);
+      response.json(result.rows);
+    }
+  });
+}
+
+var getLocationById = function(request, response) {
+  var id = parseInt(request.params.id);
+  pool.query('SELECT current.address AS "devLoc", destination.address AS "devDest" \
+  FROM devices \
+  INNER JOIN buildings AS current ON devices."buildingId"=current.id \
+  INNER JOIN buildings AS destination ON devices."destinationId"=destination.id \
+  WHERE devices.id = $1', [id], function(error, result) {
     if (error) {
       response.status(400);
       console.error(error.stack);
@@ -134,6 +152,7 @@ module.exports = {
   getBuildingById,
   getDevices,
   getDeviceById,
+  getLocationById,
   createDevice,
   getTechnicians,
   getTechnicianById,
