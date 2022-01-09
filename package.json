@@ -11,7 +11,7 @@
     "body-parser": "1.19.1",
     "express": "4.17.2",
     "express-handlebars": "6.0.2",
-    "pg": "7.11.0",
+    "pg": "7.18.2",
     "pg-hstore": "2.3.4",
     "request": "2.88.0"
   },
