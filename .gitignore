@@ -32,3 +32,6 @@ node_modules
 dbCon\.js
 
 credentials\.js
+
+.idea/
+*.iml

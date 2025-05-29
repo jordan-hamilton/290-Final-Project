@@ -34,7 +34,7 @@ html, body {
 #nav>a>img {
   height: 20px;
   color: white;
-  padding: 0px 10px;
+  padding: 0 10px;
 }
 
 /*Listbox*/
@@ -44,7 +44,7 @@ html, body {
   overflow-y: auto;
   background-color: #717073;
   color: #fff;
-  padding: 10px 0px;
+  padding: 10px 0;
   text-align: left;
 }
 
@@ -71,7 +71,7 @@ ul {
 
 /*Device to display location*/
 .devLoc {
-  padding: 0px 10px;
+  padding: 0 10px;
   text-align: left;
 }
 

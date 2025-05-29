@@ -1,151 +1,168 @@
-var Pool = require('pg').Pool;
+const Pool = require("pg").Pool;
 
+let conn;
 // Import our database connection credentials if they're not stored in an environment variable
 if (!process.env.DATABASE_URL) {
-  var conn = require('../credentials.js')
+  conn = require("../credentials.js");
 }
 
-var pool = new Pool({
+const pool = new Pool({
   connectionString: process.env.DATABASE_URL || conn.DATABASE_URL,
-  ssl: true
-})
+  ssl: false,
+});
 
-var getBuildings = function(request, response) {
-  pool.query('SELECT * FROM buildings ORDER BY name ASC', function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
+const getBuildings = (req, res) => {
+  pool.query("SELECT * FROM buildings ORDER BY name ASC", (err, data) => {
+    if (err) {
+      res.status(400);
+      console.error(err.stack);
     } else {
-      response.status(200);
-      response.json(result.rows);
+      res.status(200);
+      res.json(data.rows);
     }
   });
-}
+};
 
-var getBuildingById = function(request, response) {
-  var id = parseInt(request.params.id);
-  pool.query('SELECT * FROM buildings WHERE id = $1', [id], function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
+const getBuildingById = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query("SELECT * FROM buildings WHERE id = $1", [id], (err, data) => {
+    if (err) {
+      res.status(400);
+      console.error(err.stack);
     } else {
-      response.status(200);
-      response.json(result.rows);
+      res.status(200);
+      res.json(data.rows);
     }
   });
-}
+};
 
-var getDevices = function(request, response) {
-  pool.query('SELECT * FROM devices ORDER BY id ASC', function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
+const getDevices = (req, res) => {
+  pool.query("SELECT * FROM devices ORDER BY id ASC", (err, data) => {
+    if (err) {
+      res.status(400);
+      console.error(err.stack);
     } else {
-      response.status(200);
-      response.json(result.rows);
+      res.status(200);
+      res.json(data.rows);
     }
   });
-}
+};
 
-var getDeviceById = function(request, response) {
-  var id = parseInt(request.params.id);
-  pool.query('SELECT * FROM devices WHERE id = $1', [id], function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
+const getDeviceById = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query("SELECT * FROM devices WHERE id = $1", [id], (err, data) => {
+    if (err) {
+      res.status(400);
+      console.error(err.stack);
     } else {
-      response.status(200);
-      response.json(result.rows);
+      res.status(200);
+      res.json(data.rows);
     }
   });
-}
+};
 
-var getLocationById = function(request, response) {
-  var id = parseInt(request.params.id);
-  pool.query('SELECT current.address AS "devLoc", destination.address AS "devDest" \
+const getLocationById = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query(
+    'SELECT current.address AS "devLoc", destination.address AS "devDest" \
   FROM devices \
   INNER JOIN buildings AS current ON devices."buildingId"=current.id \
   INNER JOIN buildings AS destination ON devices."destinationId"=destination.id \
-  WHERE devices.id = $1', [id], function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
-    } else {
-      response.status(200);
-      response.json(result.rows);
+  WHERE devices.id = $1',
+    [id],
+    (err, data) => {
+      if (err) {
+        res.status(400);
+        console.error(err.stack);
+      } else {
+        res.status(200);
+        res.json(data.rows);
+      }
     }
-  });
-}
+  );
+};
 
-var createDevice = function(request, response) {
-  var name = request.body.devName;
-  var type = request.body.devType;
-  var techId = parseInt(request.body.techId);
-  var devLoc = parseInt(request.body.devLoc);
-  var devDest = parseInt(request.body.devDest);
-  var time = new Date();
-  pool.query('INSERT INTO devices (name, type, "createdAt", "updatedAt", "technicianId", "buildingId", "destinationId") VALUES ($1, $2, $3, $3, $4, $5, $6)', [name, type, time, techId, devLoc, devDest], function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
-    } else {
-      response.status(201);
-      response.send(`Device added to the devices table.`);
+const createDevice = (req, res) => {
+  const name = req.body.devName;
+  const type = req.body.devType;
+  const techId = parseInt(req.body.techId);
+  const devLoc = parseInt(req.body.devLoc);
+  const devDest = parseInt(req.body.devDest);
+  const time = new Date();
+  pool.query(
+    'INSERT INTO devices (name, type, "createdAt", "updatedAt", "technicianId", "buildingId", "destinationId") VALUES ($1, $2, $3, $3, $4, $5, $6)',
+    [name, type, time, techId, devLoc, devDest],
+    (err, data) => {
+      if (err) {
+        res.status(400);
+        console.error(err.stack);
+      } else {
+        res.status(201);
+        res.send(`Device added to the devices table.`);
+      }
     }
-  });
-}
+  );
+};
 
-var getTechnicians = function(request, response) {
-  pool.query('SELECT * FROM technicians ORDER BY id ASC', function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
+const getTechnicians = (req, res) => {
+  pool.query("SELECT * FROM technicians ORDER BY id ASC", (err, data) => {
+    if (err) {
+      res.status(400);
+      console.error(err.stack);
     } else {
-      response.status(200);
-      response.json(result.rows);
+      res.status(200);
+      res.json(data.rows);
     }
   });
-}
+};
 
-var getTechnicianById = function(request, response) {
-  var id = parseInt(request.params.id);
-  pool.query('SELECT * FROM technicians WHERE id = $1', [id], function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
+const getTechnicianById = (req, res) => {
+  const id = parseInt(req.params.id);
+  pool.query("SELECT * FROM technicians WHERE id = $1", [id], (err, data) => {
+    if (err) {
+      res.status(400);
+      console.error(err.stack);
     } else {
-      response.status(200);
-      response.json(result.rows);
+      res.status(200);
+      res.json(data.rows);
     }
   });
-}
+};
 
-var getTechnicianByName = function(request, response) {
-  var techName = request.params.techName;
-  pool.query('SELECT * FROM technicians WHERE name = $1', [techName], function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
-    } else {
-      response.status(200);
-      response.json(result.rows);
+const getTechnicianByName = (req, res) => {
+  const techName = req.params.techName;
+  pool.query(
+    "SELECT * FROM technicians WHERE name = $1",
+    [techName],
+    (err, data) => {
+      if (err) {
+        res.status(400);
+        console.error(err.stack);
+      } else {
+        res.status(200);
+        res.json(data.rows);
+      }
     }
-  });
-}
+  );
+};
 
-var createTechnician = function(request, response) {
-  var techName = request.body.techName;
-  var time = new Date();
-  pool.query('INSERT INTO technicians (name, "updatedAt", "createdAt") VALUES ($1, $2, $2)', [techName, time], function(error, result) {
-    if (error) {
-      response.status(400);
-      console.error(error.stack);
-    } else {
-      response.status(201);
-      response.send(`Technician added to the technicians table.`);
+const createTechnician = (req, res) => {
+  const techName = req.body.techName;
+  const time = new Date();
+  pool.query(
+    'INSERT INTO technicians (name, "updatedAt", "createdAt") VALUES ($1, $2, $2)',
+    [techName, time],
+    (err, data) => {
+      if (err) {
+        res.status(400);
+        console.error(err.stack);
+      } else {
+        res.status(201);
+        res.send(`Technician added to the technicians table.`);
+      }
     }
-  });
-}
+  );
+};
 
 module.exports = {
   getBuildings,
@@ -157,5 +174,5 @@ module.exports = {
   getTechnicians,
   getTechnicianById,
   getTechnicianByName,
-  createTechnician
-}
+  createTechnician,
+};

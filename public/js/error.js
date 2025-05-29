@@ -1,6 +1,6 @@
-import NavBar from './navBar.js';
+import NavBar from "./navBar.js";
 
-var nav = NavBar;
+const nav = NavBar;
 
 // Display the navigation bar
-document.getElementById('app').insertAdjacentElement('beforebegin', nav());
+document.getElementById("app").insertAdjacentElement("beforebegin", nav());

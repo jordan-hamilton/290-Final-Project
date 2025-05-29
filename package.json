@@ -1,5 +1,5 @@
 {
-  "name": "AssetTracker",
+  "name": "asset-tracker",
   "version": "1.0.0",
   "description": "A web app designed to track the location and assignment of multiple devices using the Google Distance Matrix API",
   "main": "index.js",
@@ -11,15 +11,19 @@
     "body-parser": "1.20.2",
     "express": "4.18.2",
     "express-handlebars": "7.0.7",
+    "got": "12.6.0",
+    "request": "2.88.2",
     "pg": "8.10.0",
-    "pg-hstore": "2.3.4",
-    "request": "2.88.2"
+    "pg-hstore": "2.3.4"
   },
   "engines": {
     "node": "^18.0.0",
-    "yarn": "1.22.19"
+    "npm": "^9.0.0"
   },
   "scripts": {
     "start": "node app.js"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.8"
   }
 }
